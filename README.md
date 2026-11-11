@@ -59,3 +59,8 @@ Please read the [build from source documentation](https://www.traccar.org/build/
 ## License
 
 Apache License, Version 2.0. See [LICENSE.txt](https://github.com/traccar/traccar/blob/master/LICENSE.txt) for details.
+
+## Fork contributions
+
+This fork adds [telemetry-quality statistics](docs/telemetry-quality.md) to full
+summary reports, including observed sample counts and the largest reporting gap.
