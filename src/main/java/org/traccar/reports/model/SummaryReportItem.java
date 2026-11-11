@@ -18,6 +18,16 @@ package org.traccar.reports.model;
 
 public class SummaryReportItem extends BaseReportItem {
 
+    private TelemetryQuality telemetryQuality;
+
+    public TelemetryQuality getTelemetryQuality() {
+        return telemetryQuality;
+    }
+
+    public void setTelemetryQuality(TelemetryQuality telemetryQuality) {
+        this.telemetryQuality = telemetryQuality;
+    }
+
     public long getEngineHours() {
         return endHours - startHours;
     }

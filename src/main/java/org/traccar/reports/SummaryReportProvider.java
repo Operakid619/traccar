@@ -29,6 +29,7 @@ import org.traccar.model.Device;
 import org.traccar.model.Event;
 import org.traccar.model.Position;
 import org.traccar.reports.common.ReportUtils;
+import org.traccar.reports.common.TelemetryQualityAccumulator;
 import org.traccar.reports.common.TripsConfig;
 import org.traccar.reports.model.SummaryReportItem;
 import org.traccar.storage.Storage;
@@ -78,9 +79,11 @@ public class SummaryReportProvider {
             first = PositionUtil.getEdgePosition(storage, device.getId(), from, to, false);
             last = PositionUtil.getEdgePosition(storage, device.getId(), from, to, true);
         } else {
+            var telemetryQuality = new TelemetryQualityAccumulator();
             try (var positions = PositionUtil.getPositionsStream(storage, device.getId(), from, to, 0)) {
                 for (var iterator = positions.iterator(); iterator.hasNext();) {
                     Position position = iterator.next();
+                    telemetryQuality.add(position.getFixTime());
                     if (first == null) {
                         first = position;
                     }
@@ -90,6 +93,7 @@ public class SummaryReportProvider {
                     last = position;
                 }
             }
+            result.setTelemetryQuality(telemetryQuality.snapshot());
         }
 
         if (first != null && last != null) {
