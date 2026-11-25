@@ -58,8 +58,15 @@ public class TelemetryQualityAccumulatorTest {
         var accumulator = new TelemetryQualityAccumulator();
         accumulator.add(new Date(1000));
         accumulator.add(new Date(1000));
-        assertEquals(0L, accumulator.snapshot().maxPositionGap());
-        assertEquals(0, accumulator.snapshot().outOfOrderCount());
+        assertEquals(1, accumulator.snapshot().duplicateTimeCount());
+        accumulator.add(null);
+        accumulator.add(new Date(500));
+        accumulator.add(new Date(1000));
+        assertEquals(2, accumulator.snapshot().duplicateTimeCount());
+        assertEquals(1, accumulator.snapshot().outOfOrderCount());
+        accumulator.add(new Date(2000));
+        assertEquals(1000L, accumulator.snapshot().maxPositionGap());
+        assertEquals(1, accumulator.snapshot().outOfOrderCount());
     }
 
     @Test

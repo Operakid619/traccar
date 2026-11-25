@@ -31,3 +31,5 @@ Run the regression tests with:
 ```sh
 ./gradlew test --tests org.traccar.reports.common.TelemetryQualityAccumulatorTest
 ```
+
+`duplicateTimeCount` counts samples equal to the latest accepted fix timestamp. Missing and late samples do not move that anchor. This is a constant-memory timestamp diagnostic, not global event deduplication.

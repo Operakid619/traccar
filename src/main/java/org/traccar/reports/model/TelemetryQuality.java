@@ -17,5 +17,9 @@ package org.traccar.reports.model;
 
 /** Largest gap is in milliseconds, or null when no forward interval was observed. */
 public record TelemetryQuality(
-        long positionCount, long missingTimeCount, long outOfOrderCount, Long maxPositionGap) {
+        long positionCount, long missingTimeCount, long outOfOrderCount, Long maxPositionGap, long duplicateTimeCount) {
+
+    public TelemetryQuality(long positionCount, long missingTimeCount, long outOfOrderCount, Long maxPositionGap) {
+        this(positionCount, missingTimeCount, outOfOrderCount, maxPositionGap, 0);
+    }
 }

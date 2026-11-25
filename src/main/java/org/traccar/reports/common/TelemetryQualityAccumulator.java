@@ -25,6 +25,7 @@ public class TelemetryQualityAccumulator {
     private long positionCount;
     private long missingTimeCount;
     private long outOfOrderCount;
+    private long duplicateTimeCount;
     private Long latestTime;
     private Long maxPositionGap;
 
@@ -40,6 +41,9 @@ public class TelemetryQualityAccumulator {
                 outOfOrderCount++;
                 return; // Do not rewind the anchor and inflate the following gap.
             }
+            if (time == latestTime) {
+                duplicateTimeCount++;
+            }
             long gap = time - latestTime;
             if (gap < 0) {
                 gap = Long.MAX_VALUE; // Saturate an interval exceeding the millisecond range.
@@ -50,6 +54,6 @@ public class TelemetryQualityAccumulator {
     }
 
     public TelemetryQuality snapshot() {
-        return new TelemetryQuality(positionCount, missingTimeCount, outOfOrderCount, maxPositionGap);
+        return new TelemetryQuality(positionCount, missingTimeCount, outOfOrderCount, maxPositionGap, duplicateTimeCount);
     }
 }
